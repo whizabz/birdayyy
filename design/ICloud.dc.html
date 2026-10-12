@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Connect iCloud</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700;800;900&display=swap">
+<style>
+body{margin:0;font-family:'Roboto Flex',system-ui,sans-serif}
+.app{--bg:#FFF8F3;--sc:#FBEBE1;--sch:#F3DCCF;--ink:#2A1A18;--ink2:#6B524C;--pri:#BF3A24;--onpri:#fff;--pc:#FFDAD2;--onpc:#4A0E04;--line:rgba(42,26,24,.14);--glass:rgba(255,248,243,.58);--glassb:rgba(255,255,255,.6);--chip:rgba(255,255,255,.55);--t1:#FFDAD2;--t2:#FFE08A;--t3:#EBD0F5;--t4:#BFEBDD;--t5:#FFE08A;--t6:#F5E3D8;--a1:#F2886F;--a2:#F4B93D;--a3:#B98AD6;--a4:#6FC3A5;--a5:#F2886F;--a6:#F4B93D;position:relative;width:390px;height:844px;overflow:hidden;background:var(--bg);color:var(--ink);box-sizing:border-box;font-family:'Roboto Flex',system-ui,sans-serif}
+.app *{box-sizing:border-box}
+.app h1,.app h2,.app p{margin:0}
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.glass{background:var(--glass);backdrop-filter:blur(22px) saturate(1.7);-webkit-backdrop-filter:blur(22px) saturate(1.7);border:1px solid var(--glassb);box-shadow:0 8px 32px rgba(60,20,10,.12)}
+.app .blob{position:absolute;filter:blur(3px);opacity:.85;border-radius:0;background-color:transparent;background-repeat:no-repeat;background-image:radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(45deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),linear-gradient(135deg,var(--a3,#B98AD6) 50%,transparent 50%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%),linear-gradient(-45deg,transparent 36%,var(--a1,#F2886F) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a5,#6FB4E8) 38% 62%,transparent 64%),radial-gradient(circle,var(--a6,#EE86AE) 0 50%,transparent 52%),linear-gradient(20deg,transparent 36%,var(--a3,#B98AD6) 36% 64%,transparent 64%),linear-gradient(315deg,var(--a2,#F4B93D) 50%,transparent 50%),radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(-30deg,transparent 36%,var(--a4,#6FC3A5) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a2,#F4B93D) 38% 62%,transparent 64%),linear-gradient(45deg,var(--a5,#6FB4E8) 50%,transparent 50%),radial-gradient(circle,var(--a3,#B98AD6) 0 50%,transparent 52%),linear-gradient(70deg,transparent 36%,var(--a6,#EE86AE) 36% 64%,transparent 64%),radial-gradient(circle,var(--a5,#6FB4E8) 0 50%,transparent 52%),linear-gradient(225deg,var(--a1,#F2886F) 50%,transparent 50%),linear-gradient(100deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a6,#EE86AE) 38% 62%,transparent 64%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%);background-size:12px 12px,22px 22px,16px 16px,10px 10px,20px 20px,18px 18px,11px 11px,24px 24px,18px 18px,9px 9px,22px 22px,16px 16px,16px 16px,12px 12px,20px 20px,9px 9px,14px 14px,26px 26px,14px 14px,8px 8px;background-position:8% 10%,30% 5%,55% 16%,78% 8%,93% 28%,14% 36%,40% 44%,66% 48%,88% 62%,5% 66%,28% 76%,52% 86%,78% 94%,96% 84%,12% 95%,62% 28%,20% 20%,44% 24%,84% 44%,36% 62%}
+.a1{background:var(--a1)}.a2{background:var(--a2)}.a3{background:var(--a3)}.a4{background:var(--a4)}.a5{background:var(--a5)}.a6{background:var(--a6)}
+.av{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:800;color:#2A1A18;flex:none}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--chip);color:var(--ink);white-space:nowrap}
+.btn{height:56px;border-radius:999px;padding:0 28px;border:0;font:700 16px 'Roboto Flex',system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--pri);color:var(--onpri)}
+.btn.tonal{background:var(--pc);color:var(--onpc)}
+.row{display:flex;align-items:center;gap:14px}
+.iconbtn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink);border:0}
+.step{border-radius:28px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
+.num{width:36px;height:36px;font-weight:800;font-size:16px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--ink2)}
+.fld input{height:52px;border-radius:16px;border:0;border-bottom:2px solid var(--pri);background:rgba(255,255,255,.7);padding:0 14px;font:500 16px 'Roboto Flex',system-ui,sans-serif;color:var(--ink);width:100%}
+</style>
+</helmet>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-chl" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6 M20 4l-9 9 M18 14v5H5V6h5"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+</defs></svg>
+<div class="app">
+  <div class="blob a3" style="width:280px;height:280px;right:-90px;top:-70px"></div>
+  <div class="blob a1" style="width:240px;height:240px;left:-80px;top:560px"></div>
+
+  <div style="position:absolute;left:12px;right:16px;top:18px;display:flex;align-items:center;justify-content:space-between">
+    <button class="iconbtn glass" aria-label="Back"><svg class="ic" aria-hidden="true"><use href="#i-chl"/></svg></button>
+    <span class="chip glass">iCloud · CardDAV</span>
+  </div>
+
+  <div style="position:absolute;left:20px;right:20px;top:82px;display:flex;flex-direction:column;gap:10px">
+    <h1 style="font-size:34px;line-height:1.05;font-weight:800;letter-spacing:-.4px">Connect iCloud</h1>
+    <p style="font-size:14px;line-height:1.4;color:var(--ink2)">Apple has no sign-in for Android, so you make a one-time app-specific password. About a minute.</p>
+
+    <div class="step" style="background:var(--t3);margin-top:4px">
+      <div class="av a3 num" style="clip-path:{{s.cookie}}">1</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+        <div style="font-weight:700;font-size:15px">Open your Apple ID page</div>
+        <div style="font-size:13px;line-height:1.35;color:#4A0E04">Sign-In and Security, then App-Specific Passwords.</div>
+        <button class="btn" style="height:40px;font-size:14px;padding:0 16px;align-self:flex-start;background:#4A0E04;color:#fff">appleid.apple.com <svg class="ic" style="width:18px;height:18px" aria-hidden="true"><use href="#i-ext"/></svg></button>
+      </div>
+    </div>
+
+    <div class="step" style="background:var(--t2)">
+      <div class="av a2 num" style="clip-path:{{s.flower}}">2</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:15px">Generate one named Birdayyy</div>
+      <div style="font-size:13px;line-height:1.35;color:#3D2E00;margin-top:4px">Copy the code. It looks like abcd-efgh-ijkl-mnop.</div></div>
+    </div>
+
+    <div class="step" style="background:var(--t1);flex-direction:column;gap:10px">
+      <div class="row"><div class="av a1 num" style="clip-path:{{s.clover}}">3</div><div style="font-weight:700;font-size:15px">Paste it here</div></div>
+      <label class="fld">Apple ID email<input type="email" value="alex.rivera@icloud.com"></label>
+      <label class="fld">App-specific password<input type="text" value="••••-••••-••••-••••"></label>
+    </div>
+
+    <div class="row" style="gap:10px;padding:0 4px"><svg class="ic" style="width:20px;height:20px;color:var(--ink2)" aria-hidden="true"><use href="#i-lock"/></svg><p style="font-size:12px;line-height:1.4;color:var(--ink2)">Read and write access to contacts, so you can add birthdays from the app. Stored encrypted on this phone, never on our servers.</p></div>
+  </div>
+
+  <div class="glass" style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 24px;border-radius:0">
+    <button class="btn" style="width:100%">Connect iCloud</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const poly = (n, amp, mode) => {
+      const pts = [];
+      for (let i = 0; i < 96; i++) {
+        const t = (i / 96) * Math.PI * 2;
+        const r = mode === 'f' ? 0.5 * ((1 - amp) + amp * Math.abs(Math.cos(n * t / 2))) : 0.5 * ((1 - amp) + amp * (1 + Math.cos(n * t)) / 2);
+        pts.push((50 + 100 * r * Math.cos(t - Math.PI / 2)).toFixed(1) + '% ' + (50 + 100 * r * Math.sin(t - Math.PI / 2)).toFixed(1) + '%');
+      }
+      return 'polygon(' + pts.join(',') + ')';
+    };
+    return { s: { cookie: poly(9, 0.12, 'c'), flower: poly(6, 0.3, 'f'), clover: poly(4, 0.34, 'f') } };
+  }
+}
+</script>
+</body>
+</html>

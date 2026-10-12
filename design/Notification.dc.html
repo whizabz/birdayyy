@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>7 AM notification</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700;800;900&display=swap">
+<style>
+body{margin:0;font-family:'Roboto Flex',system-ui,sans-serif}
+.app{--ink:#fff;--ink2:rgba(255,255,255,.78);--a1:#F2886F;--a2:#F4B93D;--a3:#B98AD6;position:relative;width:390px;height:844px;overflow:hidden;background:linear-gradient(165deg,#2A1210 0%,#7A2E1F 45%,#D9583B 80%,#F4B93D 100%);color:#fff;box-sizing:border-box;font-family:'Roboto Flex',system-ui,sans-serif}
+.app *{box-sizing:border-box}
+.app h1,.app h2,.app p{margin:0}
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.app .blob{position:absolute;filter:blur(3px);opacity:.85;border-radius:0;background-color:transparent;background-repeat:no-repeat;background-image:radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(45deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),linear-gradient(135deg,var(--a3,#B98AD6) 50%,transparent 50%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%),linear-gradient(-45deg,transparent 36%,var(--a1,#F2886F) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a5,#6FB4E8) 38% 62%,transparent 64%),radial-gradient(circle,var(--a6,#EE86AE) 0 50%,transparent 52%),linear-gradient(20deg,transparent 36%,var(--a3,#B98AD6) 36% 64%,transparent 64%),linear-gradient(315deg,var(--a2,#F4B93D) 50%,transparent 50%),radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(-30deg,transparent 36%,var(--a4,#6FC3A5) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a2,#F4B93D) 38% 62%,transparent 64%),linear-gradient(45deg,var(--a5,#6FB4E8) 50%,transparent 50%),radial-gradient(circle,var(--a3,#B98AD6) 0 50%,transparent 52%),linear-gradient(70deg,transparent 36%,var(--a6,#EE86AE) 36% 64%,transparent 64%),radial-gradient(circle,var(--a5,#6FB4E8) 0 50%,transparent 52%),linear-gradient(225deg,var(--a1,#F2886F) 50%,transparent 50%),linear-gradient(100deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a6,#EE86AE) 38% 62%,transparent 64%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%);background-size:12px 12px,22px 22px,16px 16px,10px 10px,20px 20px,18px 18px,11px 11px,24px 24px,18px 18px,9px 9px,22px 22px,16px 16px,16px 16px,12px 12px,20px 20px,9px 9px,14px 14px,26px 26px,14px 14px,8px 8px;background-position:8% 10%,30% 5%,55% 16%,78% 8%,93% 28%,14% 36%,40% 44%,66% 48%,88% 62%,5% 66%,28% 76%,52% 86%,78% 94%,96% 84%,12% 95%,62% 28%,20% 20%,44% 24%,84% 44%,36% 62%}
+.a1{background:var(--a1)}.a2{background:var(--a2)}.a3{background:var(--a3)}
+.av{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:800;color:#2A1A18;flex:none}
+.note{background:rgba(255,255,255,.2);backdrop-filter:blur(28px) saturate(1.6);-webkit-backdrop-filter:blur(28px) saturate(1.6);border:1px solid rgba(255,255,255,.3);border-radius:28px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.row{display:flex;align-items:center;gap:12px}
+.small{font-size:12px;font-weight:600;color:var(--ink2)}
+.act{height:40px;padding:0 18px;border-radius:999px;border:0;background:rgba(255,255,255,.9);color:#4A0E04;font:700 14px 'Roboto Flex',system-ui,sans-serif;display:inline-flex;align-items:center}
+.act.g{background:rgba(255,255,255,.22);color:#fff}
+.lab{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink2);padding:0 8px}
+</style>
+</helmet>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-cake" viewBox="0 0 24 24"><path d="M4 20h16v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z M12 12V9 M12 6.5c1-1 1-2 0-3-1 1-1 2 0 3z M4 16.5c2 1.3 3.5 1.3 4 0 .5 1.3 3.5 1.3 4 0 .5 1.3 3.5 1.3 4 0 .3.8 1.2 1 4 0"/></symbol>
+<symbol id="i-chd" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z M16.5 9.5l4 5 M20.5 9.5l-4 5"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+</defs></svg>
+<div class="app">
+  <div class="blob a3" style="width:280px;height:280px;left:-90px;top:-50px"></div>
+  <div class="blob a2" style="width:300px;height:300px;right:-120px;top:520px"></div>
+
+  <div style="position:absolute;left:0;right:0;top:56px;text-align:center">
+    <svg class="ic" style="width:20px;height:20px;opacity:.85" aria-hidden="true"><use href="#i-lock"/></svg>
+    <div style="font-size:96px;font-weight:300;line-height:1;letter-spacing:-3px;margin-top:6px">7:00</div>
+    <div style="font-size:16px;font-weight:600;opacity:.9;margin-top:4px">Saturday, 10 October</div>
+  </div>
+
+  <div style="position:absolute;left:14px;right:14px;top:250px;display:flex;flex-direction:column;gap:10px">
+    <div class="note" style="display:flex;flex-direction:column;gap:12px">
+      <div class="row">
+        <div class="av a1" style="width:28px;height:28px;clip-path:{{s.cookie}};color:#4A0E04"><svg class="ic" style="width:16px;height:16px" aria-hidden="true"><use href="#i-cake"/></svg></div>
+        <span class="small" style="flex:1">Birdayyy · 7:00 AM</span>
+        <svg class="ic" style="width:20px;height:20px;opacity:.8" aria-hidden="true"><use href="#i-chd"/></svg>
+      </div>
+      <div style="font-size:19px;font-weight:800;letter-spacing:-.2px">2 celebrations today</div>
+      <div class="row">
+        <div class="av a2" style="width:44px;height:44px;clip-path:{{s.flower}}">MO</div>
+        <div style="flex:1"><div style="font-weight:700;font-size:15px">Maya Okafor</div><div class="small">Birthday · turns 29</div></div>
+        <button class="act">Wish</button>
+      </div>
+      <div class="row">
+        <div class="av a3" style="width:44px;height:44px;clip-path:{{s.clover}}">SW</div>
+        <div style="flex:1"><div style="font-weight:700;font-size:15px">Sam Whitlock</div><div class="small">5th anniversary</div></div>
+        <button class="act">Wish</button>
+      </div>
+      <div class="row" style="gap:8px;border-top:1px solid rgba(255,255,255,.25);padding-top:12px"><button class="act g">Open Birdayyy</button><button class="act g">Remind me at noon</button></div>
+    </div>
+
+    <div class="lab" style="margin-top:6px">SILENT</div>
+    <div class="note" style="padding:12px 16px">
+      <div class="row">
+        <div class="av a1" style="width:40px;height:40px;border-radius:50% 50% 18% 18%">NR</div>
+        <div style="flex:1"><div class="small">Birdayyy · 7:00 AM</div><div style="font-weight:700;font-size:15px">Nana Rose turns 82 on Wednesday</div></div>
+        <svg class="ic" style="width:20px;height:20px;opacity:.85" aria-hidden="true"><use href="#i-mute"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const poly = (n, amp, mode) => {
+      const pts = [];
+      for (let i = 0; i < 96; i++) {
+        const t = (i / 96) * Math.PI * 2;
+        const r = mode === 'f' ? 0.5 * ((1 - amp) + amp * Math.abs(Math.cos(n * t / 2))) : 0.5 * ((1 - amp) + amp * (1 + Math.cos(n * t)) / 2);
+        pts.push((50 + 100 * r * Math.cos(t - Math.PI / 2)).toFixed(1) + '% ' + (50 + 100 * r * Math.sin(t - Math.PI / 2)).toFixed(1) + '%');
+      }
+      return 'polygon(' + pts.join(',') + ')';
+    };
+    return { s: { cookie: poly(9, 0.12, 'c'), flower: poly(6, 0.3, 'f'), clover: poly(4, 0.34, 'f') } };
+  }
+}
+</script>
+</body>
+</html>

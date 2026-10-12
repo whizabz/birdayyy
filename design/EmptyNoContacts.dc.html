@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Empty: no contacts</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700;800;900&display=swap">
+<style>
+body{margin:0;font-family:'Roboto Flex',system-ui,sans-serif}
+.app{--bg:#FFF8F3;--sc:#FBEBE1;--sch:#F3DCCF;--ink:#2A1A18;--ink2:#6B524C;--pri:#BF3A24;--onpri:#fff;--pc:#FFDAD2;--onpc:#4A0E04;--line:rgba(42,26,24,.14);--glass:rgba(255,248,243,.58);--glassb:rgba(255,255,255,.6);--t3:#EBD0F5;--t5:#FFE08A;--a1:#F2886F;--a2:#F4B93D;--a3:#B98AD6;--a4:#6FC3A5;--a5:#F2886F;position:relative;width:390px;height:844px;overflow:hidden;background:var(--bg);color:var(--ink);box-sizing:border-box;font-family:'Roboto Flex',system-ui,sans-serif}
+.app *{box-sizing:border-box}
+.app h1,.app h2,.app p{margin:0}
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.glass{background:var(--glass);backdrop-filter:blur(22px) saturate(1.7);-webkit-backdrop-filter:blur(22px) saturate(1.7);border:1px solid var(--glassb);box-shadow:0 8px 32px rgba(60,20,10,.12)}
+.app .blob{position:absolute;filter:blur(3px);opacity:.85;border-radius:0;background-color:transparent;background-repeat:no-repeat;background-image:radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(45deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),linear-gradient(135deg,var(--a3,#B98AD6) 50%,transparent 50%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%),linear-gradient(-45deg,transparent 36%,var(--a1,#F2886F) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a5,#6FB4E8) 38% 62%,transparent 64%),radial-gradient(circle,var(--a6,#EE86AE) 0 50%,transparent 52%),linear-gradient(20deg,transparent 36%,var(--a3,#B98AD6) 36% 64%,transparent 64%),linear-gradient(315deg,var(--a2,#F4B93D) 50%,transparent 50%),radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(-30deg,transparent 36%,var(--a4,#6FC3A5) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a2,#F4B93D) 38% 62%,transparent 64%),linear-gradient(45deg,var(--a5,#6FB4E8) 50%,transparent 50%),radial-gradient(circle,var(--a3,#B98AD6) 0 50%,transparent 52%),linear-gradient(70deg,transparent 36%,var(--a6,#EE86AE) 36% 64%,transparent 64%),radial-gradient(circle,var(--a5,#6FB4E8) 0 50%,transparent 52%),linear-gradient(225deg,var(--a1,#F2886F) 50%,transparent 50%),linear-gradient(100deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a6,#EE86AE) 38% 62%,transparent 64%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%);background-size:12px 12px,22px 22px,16px 16px,10px 10px,20px 20px,18px 18px,11px 11px,24px 24px,18px 18px,9px 9px,22px 22px,16px 16px,16px 16px,12px 12px,20px 20px,9px 9px,14px 14px,26px 26px,14px 14px,8px 8px;background-position:8% 10%,30% 5%,55% 16%,78% 8%,93% 28%,14% 36%,40% 44%,66% 48%,88% 62%,5% 66%,28% 76%,52% 86%,78% 94%,96% 84%,12% 95%,62% 28%,20% 20%,44% 24%,84% 44%,36% 62%}
+.a1{background:var(--a1)}.a2{background:var(--a2)}.a3{background:var(--a3)}.a4{background:var(--a4)}.a5{background:var(--a5)}
+.av{position:absolute;display:flex;align-items:center;justify-content:center;color:#2A1A18}
+.btn{height:56px;border-radius:999px;padding:0 28px;border:0;font:700 16px 'Roboto Flex',system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--pri);color:var(--onpri)}
+.btn.tonal{background:var(--pc);color:var(--onpc)}
+.row{display:flex;align-items:center;gap:12px}
+.src{border-radius:24px;padding:12px 16px;display:flex;align-items:center;gap:14px}
+.navi{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:var(--ink2)}
+.navi .pill{width:56px;height:32px;border-radius:16px;display:flex;align-items:center;justify-content:center}
+.navi.on{color:var(--onpc)}
+.navi.on .pill{background:var(--pc)}
+</style>
+</helmet>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M3 19c0-3 2.5-5 6-5s6 2 6 5 M16 6a3 3 0 0 1 0 5.5 M18 14c2 .7 3 2.5 3 5"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-8A6 6 0 0 1 18 11a3.5 3.5 0 0 1-.5 7z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+<symbol id="i-tune" viewBox="0 0 24 24"><path d="M4 7h10 M18 7h2 M4 17h2 M10 17h10 M16 5v4 M8 15v4"/></symbol>
+</defs></svg>
+<div class="app">
+  <div class="blob a3" style="width:280px;height:280px;left:-90px;top:120px"></div>
+  <div class="blob a2" style="width:260px;height:260px;right:-100px;top:400px"></div>
+
+  <div style="position:absolute;left:28px;right:28px;top:76px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:28px;font-weight:900;letter-spacing:-.6px">Birdayyy</div><button aria-label="Settings" style="width:44px;height:44px;border-radius:50%;border:0;background:transparent;color:var(--ink);display:flex;align-items:center;justify-content:center"><svg class="ic" aria-hidden="true"><use href="#i-tune"/></svg></button></div>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;top:130px;height:230px">
+    <div class="av a4" style="left:60px;top:30px;width:120px;height:120px;clip-path:{{s.clover}}"><svg class="ic" style="width:50px;height:50px" aria-hidden="true"><use href="#i-users"/></svg></div>
+    <div class="av a1" style="left:196px;top:70px;width:100px;height:100px;border-radius:50% 50% 18% 18%"><svg class="ic" style="width:42px;height:42px" aria-hidden="true"><use href="#i-plus"/></svg></div>
+    <div class="av a5" style="left:130px;top:150px;width:74px;height:74px;clip-path:{{s.cookie}}"></div>
+  </div>
+
+  <div style="position:absolute;left:24px;right:24px;top:376px;display:flex;flex-direction:column;gap:10px">
+    <div style="text-align:center;margin-bottom:6px">
+      <h1 style="font-size:32px;line-height:1.05;font-weight:900;letter-spacing:-.5px">Your address book is empty</h1>
+      <p style="font-size:15px;line-height:1.45;color:var(--ink2);margin-top:8px">Bring contacts in from an account, or add the first person yourself.</p>
+    </div>
+    <div class="src" style="background:var(--t5)"><svg class="ic" style="color:#4A0E04" aria-hidden="true"><use href="#i-cloud"/></svg><div style="flex:1;font-weight:700;font-size:16px">Connect Google</div><button class="btn" style="height:40px;padding:0 18px;font-size:14px;background:#4A0E04">Connect</button></div>
+    <div class="src" style="background:var(--t3)"><svg class="ic" style="color:#4A0E04" aria-hidden="true"><use href="#i-cloud"/></svg><div style="flex:1;font-weight:700;font-size:16px">Connect iCloud</div><button class="btn" style="height:40px;padding:0 18px;font-size:14px;background:#4A0E04">Connect</button></div>
+    <button class="btn tonal" style="margin-top:4px"><svg class="ic" style="width:20px;height:20px" aria-hidden="true"><use href="#i-plus"/></svg>Add someone manually</button>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const poly = (n, amp, mode) => {
+      const pts = [];
+      for (let i = 0; i < 96; i++) {
+        const t = (i / 96) * Math.PI * 2;
+        const r = mode === 'f' ? 0.5 * ((1 - amp) + amp * Math.abs(Math.cos(n * t / 2))) : 0.5 * ((1 - amp) + amp * (1 + Math.cos(n * t)) / 2);
+        pts.push((50 + 100 * r * Math.cos(t - Math.PI / 2)).toFixed(1) + '% ' + (50 + 100 * r * Math.sin(t - Math.PI / 2)).toFixed(1) + '%');
+      }
+      return 'polygon(' + pts.join(',') + ')';
+    };
+    return { s: { cookie: poly(9, 0.12, 'c'), clover: poly(4, 0.34, 'f') } };
+  }
+}
+</script>
+</body>
+</html>

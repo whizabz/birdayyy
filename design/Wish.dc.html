@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pick a message</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700;800;900&display=swap">
+<style>
+body{margin:0;font-family:'Roboto Flex',system-ui,sans-serif}
+.app{--bg:#FFF8F3;--sc:#FBEBE1;--sch:#F3DCCF;--ink:#2A1A18;--ink2:#6B524C;--pri:#BF3A24;--onpri:#fff;--pc:#FFDAD2;--onpc:#4A0E04;--line:rgba(42,26,24,.14);--glass:rgba(255,248,243,.76);--glassb:rgba(255,255,255,.6);--t2:#FFE08A;--a1:#F2886F;--a2:#F4B93D;position:relative;width:390px;height:844px;overflow:hidden;background:var(--bg);color:var(--ink);box-sizing:border-box;font-family:'Roboto Flex',system-ui,sans-serif}
+.app *{box-sizing:border-box}
+.app h1,.app h2,.app p{margin:0}
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.glass{background:var(--glass);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);border:1px solid var(--glassb);box-shadow:0 -8px 40px rgba(60,20,10,.18)}
+.app .blob{position:absolute;filter:blur(3px);opacity:.85;border-radius:0;background-color:transparent;background-repeat:no-repeat;background-image:radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(45deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),linear-gradient(135deg,var(--a3,#B98AD6) 50%,transparent 50%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%),linear-gradient(-45deg,transparent 36%,var(--a1,#F2886F) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a5,#6FB4E8) 38% 62%,transparent 64%),radial-gradient(circle,var(--a6,#EE86AE) 0 50%,transparent 52%),linear-gradient(20deg,transparent 36%,var(--a3,#B98AD6) 36% 64%,transparent 64%),linear-gradient(315deg,var(--a2,#F4B93D) 50%,transparent 50%),radial-gradient(circle,var(--a1,#F2886F) 0 50%,transparent 52%),linear-gradient(-30deg,transparent 36%,var(--a4,#6FC3A5) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a2,#F4B93D) 38% 62%,transparent 64%),linear-gradient(45deg,var(--a5,#6FB4E8) 50%,transparent 50%),radial-gradient(circle,var(--a3,#B98AD6) 0 50%,transparent 52%),linear-gradient(70deg,transparent 36%,var(--a6,#EE86AE) 36% 64%,transparent 64%),radial-gradient(circle,var(--a5,#6FB4E8) 0 50%,transparent 52%),linear-gradient(225deg,var(--a1,#F2886F) 50%,transparent 50%),linear-gradient(100deg,transparent 36%,var(--a2,#F4B93D) 36% 64%,transparent 64%),radial-gradient(circle,transparent 0 36%,var(--a6,#EE86AE) 38% 62%,transparent 64%),radial-gradient(circle,var(--a4,#6FC3A5) 0 50%,transparent 52%);background-size:12px 12px,22px 22px,16px 16px,10px 10px,20px 20px,18px 18px,11px 11px,24px 24px,18px 18px,9px 9px,22px 22px,16px 16px,16px 16px,12px 12px,20px 20px,9px 9px,14px 14px,26px 26px,14px 14px,8px 8px;background-position:8% 10%,30% 5%,55% 16%,78% 8%,93% 28%,14% 36%,40% 44%,66% 48%,88% 62%,5% 66%,28% 76%,52% 86%,78% 94%,96% 84%,12% 95%,62% 28%,20% 20%,44% 24%,84% 44%,36% 62%}
+.a2{background:var(--a2)}
+.av{position:relative;overflow:hidden;flex:none}
+.ph{background:radial-gradient(circle at 50% 30%,#F6D9C0,#C98F6A)}
+.ph::before{content:'';position:absolute;left:34%;top:20%;width:32%;height:32%;border-radius:50%;background:rgba(255,255,255,.55)}
+.ph::after{content:'';position:absolute;left:16%;top:58%;width:68%;height:60%;border-radius:50% 50% 0 0;background:rgba(255,255,255,.45)}
+.btn{height:52px;border-radius:999px;padding:0 24px;border:0;font:700 16px 'Roboto Flex',system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--pri);color:var(--onpri)}
+.btn.tonal{background:var(--pc);color:var(--onpc)}
+.btn.text{background:transparent;color:var(--pri);padding:0 12px;height:40px;font-size:14px}
+.row{display:flex;align-items:center;gap:12px}
+.cat{height:36px;padding:0 16px;border-radius:999px;display:inline-flex;align-items:center;font-size:14px;font-weight:600;background:var(--sc);color:var(--ink2);gap:6px}
+.cat.on{background:var(--pri);color:var(--onpri)}
+.msg{border-radius:22px;padding:12px 14px;background:var(--sc);font-size:14px;line-height:1.4;display:flex;gap:10px;align-items:flex-start}
+.msg.on{background:var(--pc);border:2px solid var(--pri);padding:10px 12px}
+.radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--ink2);flex:none;margin-top:1px}
+.radio.on{border-color:var(--pri);background:radial-gradient(circle,var(--pri) 45%,transparent 50%)}
+.tok{background:rgba(255,255,255,.7);border-radius:6px;padding:0 4px;font-weight:700}
+</style>
+</helmet>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-3-7z"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</defs></svg>
+<div class="app">
+  <div class="blob a2" style="width:300px;height:300px;left:45px;top:-60px"></div>
+  <div style="position:absolute;left:16px;right:16px;top:90px;opacity:.55;display:flex;flex-direction:column;gap:12px">
+    <div style="font-size:30px;font-weight:900">Today</div>
+    <div style="height:210px;border-radius:32px;background:var(--t2)"></div>
+    <div style="height:210px;border-radius:32px;background:#F5E3D8"></div>
+  </div>
+  <div style="position:absolute;inset:0;background:rgba(30,12,8,.45)"></div>
+
+  <div class="glass" style="position:absolute;left:0;right:0;bottom:0;border-radius:36px 36px 0 0;padding:12px 20px 22px;display:flex;flex-direction:column;gap:12px">
+    <div style="width:36px;height:5px;border-radius:3px;background:var(--line);align-self:center"></div>
+    <div class="row">
+      <div class="av ph" style="width:48px;height:48px;clip-path:{{s.cookie}}"></div>
+      <div style="flex:1"><h2 style="font-size:24px;font-weight:800;letter-spacing:-.3px">Pick a template</h2><p style="font-size:13px;color:var(--ink2)">For Maya's birthday · turns 29</p></div>
+    </div>
+    <div class="row" style="gap:8px">
+      <span class="cat on"><svg class="ic" style="width:16px;height:16px" aria-hidden="true"><use href="#i-star"/></svg>Friends</span>
+      <span class="cat">Family</span>
+      <span class="cat">Colleagues</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="msg on"><div class="radio on"></div><div>Happy birthday, <span class="tok">Maya</span>! Hope your day is full of cake and zero emails.</div></div>
+      <div class="msg"><div class="radio"></div><div><span class="tok">Maya</span>! Another year, another reason to celebrate you. Dinner soon?</div></div>
+      <div class="msg"><div class="radio"></div><div>Happy <span class="tok">29th</span>, <span class="tok">Maya</span>. Wishing you a wonderful year ahead.</div></div>
+    </div>
+    <div class="row" style="justify-content:space-between"><button class="btn text">Manage templates</button><span style="font-size:12px;color:var(--ink2);text-align:right">Opens in your messaging app,<br>where you can edit it</span></div>
+    <div class="row" style="gap:8px"><button class="btn" style="flex:1">Send via... <svg class="ic" style="width:20px;height:20px" aria-hidden="true"><use href="#i-send"/></svg></button></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const pts = [];
+    for (let i = 0; i < 96; i++) {
+      const t = (i / 96) * Math.PI * 2;
+      const r = 0.5 * (0.88 + 0.12 * (1 + Math.cos(9 * t)) / 2);
+      pts.push((50 + 100 * r * Math.cos(t - Math.PI / 2)).toFixed(1) + '% ' + (50 + 100 * r * Math.sin(t - Math.PI / 2)).toFixed(1) + '%');
+    }
+    return { s: { cookie: 'polygon(' + pts.join(',') + ')' } };
+  }
+}
+</script>
+</body>
+</html>
