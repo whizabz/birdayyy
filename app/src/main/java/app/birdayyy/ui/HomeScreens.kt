@@ -16,6 +16,7 @@ import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -102,20 +103,39 @@ fun HomeScreen(vm: AppViewModel, persons: List<Person>, events: List<UpcomingEve
     }
     val gridState = rememberLazyStaggeredGridState()
     val scope = rememberCoroutineScope()
+    val earlierAlpha = remember { androidx.compose.animation.core.Animatable(1f) }
+    val earlierGroups = remember(past) { groupEarlier(past) }
+    val earlierCount = if (past.isEmpty()) 1 else past.size + earlierGroups.size
+    // Index of the "Today" section header (or the first section when nobody celebrates today).
+    val todayAnchor = if (vm.showEarlier) 1 + earlierCount else 0
+    // Show "Back to today" the moment the Today section leaves its resting place at the top of the list.
+    val awayFromToday by remember(todayAnchor) {
+        derivedStateOf {
+            gridState.firstVisibleItemIndex != todayAnchor || gridState.firstVisibleItemScrollOffset > 6
+        }
+    }
     val focus = remember { androidx.compose.ui.focus.FocusRequester() }
     /** Returns to Today and collapses Earlier, animating only the distance actually needed. */
     val backToToday: () -> Unit = {
         scope.launch {
-            val todayIndex = 1 + (if (past.isEmpty()) 1 else past.size + groupEarlier(past).size)
-            if (gridState.firstVisibleItemIndex < todayIndex) {
-                gridState.animateScrollToItem(todayIndex)
-                vm.showEarlier = false
-                gridState.scrollToItem(0)
-            } else {
-                vm.showEarlier = false
+            if (!vm.showEarlier) {
                 if (gridState.firstVisibleItemIndex > 6) gridState.scrollToItem(6)
                 gridState.animateScrollToItem(0)
+                return@launch
             }
+            // Scroll down to Today while the older events fade out, then remove them once they are invisible.
+            kotlinx.coroutines.coroutineScope {
+                launch { if (gridState.firstVisibleItemIndex < todayAnchor) gridState.animateScrollToItem(todayAnchor) }
+                launch { earlierAlpha.animateTo(0f, androidx.compose.animation.core.tween(380)) }
+            }
+            vm.showEarlier = false
+            // Let the list re-measure without the older items before touching the scroll position; scrolling by the old
+            // indices while they are still being removed is what made the list jump.
+            androidx.compose.runtime.withFrameNanos { }
+            androidx.compose.runtime.withFrameNanos { }
+            earlierAlpha.snapTo(1f)
+            if (gridState.firstVisibleItemIndex > 6) gridState.scrollToItem(6)
+            if (gridState.firstVisibleItemIndex != 0 || gridState.firstVisibleItemScrollOffset != 0) gridState.animateScrollToItem(0)
         }
     }
     val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
@@ -164,7 +184,7 @@ fun HomeScreen(vm: AppViewModel, persons: List<Person>, events: List<UpcomingEve
             }
         },
         floating = {
-            if (vm.showEarlier) Row(
+            if (awayFromToday) Row(
                 Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 28.dp)
                     .shadow(8.dp, CircleShape, ambientColor = Color(0x33602010), spotColor = Color(0x33602010)).clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primaryContainer).clickable { backToToday() }.padding(horizontal = 18.dp, vertical = 12.dp),
@@ -185,18 +205,18 @@ fun HomeScreen(vm: AppViewModel, persons: List<Person>, events: List<UpcomingEve
             val todayList = visible.filter { it.daysUntil == 0 }
             val rest = visible.filter { it.daysUntil != 0 }
             val tileColors = remember(visible, past) { assignTileColors(todayList + rest + past) }
-            val earlierGroups = remember(past) { groupEarlier(past) }
-            val earlierCount = if (past.isEmpty()) 1 else past.size + earlierGroups.size
-            val anchorIndex = 1 + if (vm.showEarlier) earlierCount else 0
+            val anchorIndex = todayAnchor
             LaunchedEffect(vm.showEarlier) {
                 if (vm.showEarlier) {
                     gridState.scrollToItem(anchorIndex)
                     gridState.animateScrollBy(-220f)
                 }
             }
-            TwoLevelPull(
+            PullActions(
                 enabled = !searching, refreshing = vm.refreshing, earlierShown = vm.showEarlier,
-                onEarlier = { vm.showEarlier = true }, onRefresh = { vm.refresh() }, topInset = pad.calculateTopPadding(),
+                onOlder = { if (vm.showEarlier) backToToday() else vm.showEarlier = true },
+                onRefresh = { vm.refresh(true) },
+                topInset = pad.calculateTopPadding(),
             ) {
             LazyVerticalStaggeredGrid(
                 StaggeredGridCells.Fixed(2), state = gridState,
@@ -211,20 +231,20 @@ fun HomeScreen(vm: AppViewModel, persons: List<Person>, events: List<UpcomingEve
                 }.semantics {
                     customActions = listOf(
                         CustomAccessibilityAction("Show earlier events") { vm.showEarlier = true; true },
-                        CustomAccessibilityAction("Refresh contacts") { vm.refresh(); true },
+                        CustomAccessibilityAction("Refresh contacts") { vm.refresh(true); true },
                     )
                 },
             ) {
                 if (vm.showEarlier) item(span = StaggeredGridItemSpan.FullLine, key = "earlier-row") {
-                    EarlierRow(true, past.size, { backToToday() }, { vm.refresh() })
+                    Box(Modifier.graphicsLayer { alpha = earlierAlpha.value }) { EarlierRow(true, past.size, { backToToday() }, { vm.refresh() }) }
                 }
                 if (vm.showEarlier) {
                     if (past.isEmpty()) item(span = StaggeredGridItemSpan.FullLine, key = "no-past") {
-                        Text("Nothing in the last 12 months.", Modifier.padding(horizontal = 8.dp, vertical = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Nothing in the last 12 months.", Modifier.graphicsLayer { alpha = earlierAlpha.value }.padding(horizontal = 8.dp, vertical = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     earlierGroups.forEach { (title, list) ->
-                        item(span = StaggeredGridItemSpan.FullLine, key = "pg-$title") { SectionLabel(title, Modifier.padding(top = 4.dp)) }
-                        items(list, key = { "p" + it.id }) { EventTile(vm, it, s, 0) }
+                        item(span = StaggeredGridItemSpan.FullLine, key = "pg-$title") { SectionLabel(title, Modifier.graphicsLayer { alpha = earlierAlpha.value }.padding(top = 4.dp)) }
+                        items(list, key = { "p" + it.id }) { Box(Modifier.graphicsLayer { alpha = earlierAlpha.value }) { EventTile(vm, it, s, 0) } }
                     }
                 }
                 if (todayList.isNotEmpty()) {
@@ -237,9 +257,12 @@ fun HomeScreen(vm: AppViewModel, persons: List<Person>, events: List<UpcomingEve
                     item(span = StaggeredGridItemSpan.FullLine, key = "h-week") { SectionLabel("This week") }
                     items(week, key = { "w" + it.id }) { EventTile(vm, it, s, tileColors[it.id] ?: 0) }
                 }
-                if (later.isNotEmpty()) {
-                    item(span = StaggeredGridItemSpan.FullLine, key = "h-later") { SectionLabel("Later") }
-                    items(later, key = { "l" + it.id }) { EventTile(vm, it, s, tileColors[it.id] ?: 0) }
+                val thisYear = java.time.LocalDate.now().year
+                later.groupBy { java.time.YearMonth.from(it.on) }.toSortedMap().forEach { (ym, list) ->
+                    val name = ym.month.getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.getDefault())
+                    val title = if (ym.year == thisYear) name else "$name ${ym.year}"
+                    item(span = StaggeredGridItemSpan.FullLine, key = "lg-$ym") { SectionLabel(title, Modifier.padding(top = 4.dp)) }
+                    items(list, key = { "l" + it.id }) { EventTile(vm, it, s, tileColors[it.id] ?: 0) }
                 }
                 if (noDates.isNotEmpty()) {
                     item(span = StaggeredGridItemSpan.FullLine, key = "h-nodates") { SectionLabel("No dates yet", Modifier.padding(top = 4.dp)) }

@@ -228,6 +228,15 @@ fun SettingsScreen(vm: AppViewModel, s: Settings) {
                     }
                 }
                 RowDivider()
+                Column(Modifier.fillMaxWidth().padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Font", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        FontChoice.entries.forEach { f ->
+                            PillChip(f.label, s.font == f, { vm.store.update { it.copy(font = f) } }, style = ChipStyle.Setting, fontFamily = familyFor(f))
+                        }
+                    }
+                }
+                RowDivider()
                 Row(Modifier.fillMaxWidth().padding(vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text("Theme", Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.Bold)
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {

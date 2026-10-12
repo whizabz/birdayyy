@@ -44,5 +44,7 @@ object Ic {
     val Chat: ImageVector get() = PhosphorIcons.Regular.ChatCircle
     val Camera: ImageVector get() = PhosphorIcons.Regular.Camera
     val ArrowDown: ImageVector get() = PhosphorIcons.Regular.ArrowDown
+    val OlderEvents: ImageVector get() = PhosphorIcons.Regular.ClockCounterClockwise
+    val NewEvent: ImageVector get() = PhosphorIcons.Regular.CalendarPlus
     val Champagne: ImageVector get() = PhosphorIcons.Regular.Cheers
 }

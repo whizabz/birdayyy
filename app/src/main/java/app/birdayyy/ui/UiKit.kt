@@ -142,7 +142,7 @@ fun SettingRow(
 enum class ChipStyle { Filter, Category, Setting, Choice }
 
 @Composable
-fun PillChip(text: String, selected: Boolean = false, onClick: (() -> Unit)? = null, icon: ImageVector? = null, style: ChipStyle = ChipStyle.Filter) {
+fun PillChip(text: String, selected: Boolean = false, onClick: (() -> Unit)? = null, icon: ImageVector? = null, style: ChipStyle = ChipStyle.Filter, fontFamily: androidx.compose.ui.text.font.FontFamily? = null) {
     val c = MaterialTheme.colorScheme
     val (bg, fg, border) = when (style) {
         ChipStyle.Filter -> Triple(if (selected) c.primary else chipBg(), if (selected) c.onPrimary else c.onSurface, null)
@@ -159,7 +159,7 @@ fun PillChip(text: String, selected: Boolean = false, onClick: (() -> Unit)? = n
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         if (icon != null) Icon(icon, null, Modifier.size(16.dp), tint = fg)
-        Text(text, fontSize = if (style == ChipStyle.Category || style == ChipStyle.Choice) 14.sp else 13.sp, fontWeight = FontWeight.SemiBold, color = fg, maxLines = 1)
+        Text(text, fontSize = if (style == ChipStyle.Category || style == ChipStyle.Choice) 14.sp else 13.sp, fontWeight = FontWeight.SemiBold, color = fg, maxLines = 1, fontFamily = fontFamily)
     }
 }
 

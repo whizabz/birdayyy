@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         vm.handleIntent(intent)
         setContent {
             val settings by vm.settings.collectAsState()
-            BirdayyyTheme(settings.theme, settings.dynamicColor) { BirdayyyRoot(vm) }
+            BirdayyyTheme(settings.theme, settings.dynamicColor, settings.font) { BirdayyyRoot(vm) }
         }
     }
 

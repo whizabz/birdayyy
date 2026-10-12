@@ -16,6 +16,7 @@ enum class TemplateKind { Birthday, Anniversary, Any }
 enum class SourceType(val label: String) { Phone("Phone"), Google("Google"), ICloud("iCloud") }
 enum class ListMode { Combined, Separate }
 enum class ThemeMode { System, Light, Dark }
+enum class FontChoice(val label: String) { System("System"), RobotoFlex("Roboto Flex"), WorkSans("Work Sans") }
 
 data class AccountRef(val type: String?, val name: String?) {
     val source: SourceType
@@ -91,6 +92,7 @@ data class Settings(
     val icloudOn: Boolean = true,
     val dynamicColor: Boolean = false,
     val theme: ThemeMode = ThemeMode.System,
+    val font: FontChoice = FontChoice.RobotoFlex,
     val onboarded: Boolean = false,
     val icloudEmail: String? = null,
     val styles: Map<String, ReminderStyle> = emptyMap(),

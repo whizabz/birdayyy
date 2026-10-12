@@ -22,7 +22,7 @@ Debug builds include a "Send a test reminder" row in Settings.
 
 `design/` holds the design boards (`*.dc.html`) and `canvas.json` layout exported from the design canvas.
 
-Icons: [Phosphor](https://phosphoricons.com) (Regular) via `com.adamglin:phosphor-icon`. Type: Roboto Flex.
+Icons: [Phosphor](https://phosphoricons.com) (Regular) via `com.adamglin:phosphor-icon`. Fonts: Roboto Flex (default) and Work Sans, bundled (SIL Open Font License), with a System option in Settings.
 
 ## License
 

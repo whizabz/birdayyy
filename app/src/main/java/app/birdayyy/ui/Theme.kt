@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.material3.Typography
 import app.birdayyy.R
 import androidx.compose.ui.platform.LocalContext
+import app.birdayyy.data.FontChoice
 import app.birdayyy.data.ThemeMode
 
 @Immutable
@@ -75,26 +76,34 @@ private val Dark = darkColorScheme(
     error = Color(0xFFFFB4AB), errorContainer = Color(0xFF93000A), onErrorContainer = Color(0xFFFFDAD6),
 )
 
-val RobotoFlex = FontFamily((100..1000 step 100).map { w ->
-    Font(R.font.roboto_flex, FontWeight(w), variationSettings = FontVariation.Settings(FontVariation.weight(w)))
+private fun variable(res: Int, max: Int) = FontFamily((100..max step 100).map { w ->
+    Font(res, FontWeight(w), variationSettings = FontVariation.Settings(FontVariation.weight(w)))
 })
 
-private fun typography(): Typography {
+val RobotoFlexFamily = variable(R.font.roboto_flex, 900)
+val WorkSansFamily = variable(R.font.work_sans, 900)
+
+fun familyFor(choice: FontChoice): FontFamily = when (choice) {
+    FontChoice.System -> FontFamily.Default
+    FontChoice.RobotoFlex -> RobotoFlexFamily
+    FontChoice.WorkSans -> WorkSansFamily
+}
+
+private fun typography(family: FontFamily): Typography {
     val t = Typography()
+    val u = androidx.compose.ui.unit.TextUnit.Unspecified
+    fun androidx.compose.ui.text.TextStyle.f() = copy(fontFamily = family, lineHeight = u, letterSpacing = u)
     return Typography(
-        displayLarge = t.displayLarge.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified), displayMedium = t.displayMedium.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
-        displaySmall = t.displaySmall.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified), headlineLarge = t.headlineLarge.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
-        headlineMedium = t.headlineMedium.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified), headlineSmall = t.headlineSmall.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
-        titleLarge = t.titleLarge.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified), titleMedium = t.titleMedium.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
-        titleSmall = t.titleSmall.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified), bodyLarge = t.bodyLarge.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
-        bodyMedium = t.bodyMedium.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified), bodySmall = t.bodySmall.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
-        labelLarge = t.labelLarge.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified), labelMedium = t.labelMedium.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
-        labelSmall = t.labelSmall.copy(fontFamily = RobotoFlex, lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified, letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified),
+        displayLarge = t.displayLarge.f(), displayMedium = t.displayMedium.f(), displaySmall = t.displaySmall.f(),
+        headlineLarge = t.headlineLarge.f(), headlineMedium = t.headlineMedium.f(), headlineSmall = t.headlineSmall.f(),
+        titleLarge = t.titleLarge.f(), titleMedium = t.titleMedium.f(), titleSmall = t.titleSmall.f(),
+        bodyLarge = t.bodyLarge.f(), bodyMedium = t.bodyMedium.f(), bodySmall = t.bodySmall.f(),
+        labelLarge = t.labelLarge.f(), labelMedium = t.labelMedium.f(), labelSmall = t.labelSmall.f(),
     )
 }
 
 @Composable
-fun BirdayyyTheme(theme: ThemeMode, dynamic: Boolean, content: @Composable () -> Unit) {
+fun BirdayyyTheme(theme: ThemeMode, dynamic: Boolean, font: FontChoice = FontChoice.RobotoFlex, content: @Composable () -> Unit) {
     val dark = when (theme) { ThemeMode.System -> isSystemInDarkTheme(); ThemeMode.Light -> false; ThemeMode.Dark -> true }
     val ctx = LocalContext.current
     val useDynamic = dynamic && Build.VERSION.SDK_INT >= 31
@@ -113,6 +122,6 @@ fun BirdayyyTheme(theme: ThemeMode, dynamic: Boolean, content: @Composable () ->
         )
     } else if (dark) darkPalette else lightPalette
     CompositionLocalProvider(LocalPalette provides palette) {
-        MaterialExpressiveTheme(colorScheme = scheme, motionScheme = MotionScheme.expressive(), typography = remember { typography() }, content = content)
+        MaterialExpressiveTheme(colorScheme = scheme, motionScheme = MotionScheme.expressive(), typography = remember(font) { typography(familyFor(font)) }, content = content)
     }
 }

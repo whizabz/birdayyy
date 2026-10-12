@@ -29,7 +29,7 @@ class SettingsStore(ctx: Context) {
         put("birthdays", s.birthdays); put("anniversaries", s.anniversaries); put("others", s.others)
         put("defaultStyle", s.defaultStyle.name); put("mode", s.mode.name)
         put("phoneOn", s.phoneOn); put("googleOn", s.googleOn); put("icloudOn", s.icloudOn)
-        put("dynamicColor", s.dynamicColor); put("theme", s.theme.name); put("onboarded", s.onboarded)
+        put("dynamicColor", s.dynamicColor); put("theme", s.theme.name); put("font", s.font.name); put("onboarded", s.onboarded)
         put("icloudEmail", s.icloudEmail ?: JSONObject.NULL)
         put("styles", JSONObject().also { o -> s.styles.forEach { (k, v) -> o.put(k, v.name) } })
         put("categories", JSONObject().also { o -> s.categories.forEach { (k, v) -> o.put(k, v.name) } })
@@ -67,6 +67,7 @@ class SettingsStore(ctx: Context) {
             icloudOn = o.optBoolean("icloudOn", true),
             dynamicColor = o.optBoolean("dynamicColor", false),
             theme = runCatching { ThemeMode.valueOf(o.getString("theme")) }.getOrDefault(d.theme),
+            font = runCatching { FontChoice.valueOf(o.getString("font")) }.getOrDefault(d.font),
             onboarded = o.optBoolean("onboarded", false),
             icloudEmail = if (o.isNull("icloudEmail")) null else o.optString("icloudEmail"),
             styles = map("styles") { runCatching { ReminderStyle.valueOf(it) }.getOrNull() },

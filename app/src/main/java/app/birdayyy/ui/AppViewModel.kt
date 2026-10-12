@@ -85,8 +85,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun refresh() {
+    /** Reloads contacts. Silent by default (launch, resume, after edits); pass [showIndicator] for a user-requested refresh. */
+    fun refresh(showIndicator: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
+            if (!showIndicator) { reload(); return@launch }
             refreshing = true
             val started = System.currentTimeMillis()
             try { reload() } finally {
